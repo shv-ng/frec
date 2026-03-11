@@ -1,4 +1,4 @@
-package main
+package store
 
 import (
 	"os"
@@ -45,8 +45,8 @@ func Test_listNameSpace(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := newStore(tt.dir)
-			got, gotErr := s.listNs()
+			s := New(tt.dir)
+			got, gotErr := s.ListNs()
 
 			if (gotErr != nil) != tt.wantErr {
 				t.Errorf("listNameSpace() error = %v, wantErr %v", gotErr, tt.wantErr)

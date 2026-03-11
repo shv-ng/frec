@@ -1,4 +1,4 @@
-package main
+package score
 
 import (
 	"testing"
@@ -67,7 +67,7 @@ func Test_calculateScore(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := calculateScore(tt.firstSeen, tt.visits, tt.count, tt.starred)
+			got := CalculateScore(tt.firstSeen, tt.visits, tt.count, tt.starred)
 			if got != tt.want {
 				t.Errorf("%s: got %v, want %v", tt.name, got, tt.want)
 			}
