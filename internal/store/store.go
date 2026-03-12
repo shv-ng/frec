@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-	"syscall"
 )
 
 type Item struct {
@@ -65,6 +64,7 @@ func (s *store) LoadItems(ns string) (items []*Item, err error) {
 	if err != nil {
 		return
 	}
+	defer unlockFile(f)
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
@@ -84,6 +84,7 @@ func (s *store) UpsertItems(ns string, items ...*Item) error {
 	if err != nil {
 		return err
 	}
+	defer unlockFile(f)
 	defer f.Close()
 	tmp, err := os.CreateTemp(s.dir, ns+"*.tsv")
 	if err != nil {
@@ -122,6 +123,7 @@ func (s *store) ReplaceItems(ns string, items ...*Item) error {
 	if err != nil {
 		return err
 	}
+	defer unlockFile(f)
 	defer f.Close()
 
 	tmp, err := os.CreateTemp(s.dir, ns+"*.tsv")
@@ -163,7 +165,9 @@ func (s *store) GetItem(ns, name string) (*Item, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer unlockFile(f)
 	defer f.Close()
+
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 
@@ -183,7 +187,7 @@ func (s *store) openNs(ns string) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := syscall.Flock(int(f.Fd()), syscall.LOCK_EX); err != nil {
+	if err := lockFile(f); err != nil {
 		f.Close()
 		return nil, err
 	}
