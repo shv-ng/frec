@@ -29,7 +29,7 @@ func Test_calculateScore(t *testing.T) {
 			want:      500,
 		},
 		{
-			name:      "Starred multiplier (1.6x)",
+			name:      "Starred multiplier (2x)",
 			firstSeen: daysAgo(2),
 			visits:    []int64{daysAgo(1)},
 			count:     10,
