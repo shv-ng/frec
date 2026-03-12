@@ -12,9 +12,10 @@ import (
 
 func main() {
 	app := &cli.Command{
-		Name:     "frec",
-		Usage:    "track items by frequency and recency",
-		Commands: []*cli.Command{},
+		Name:                  "frec",
+		Usage:                 "track items by frequency and recency",
+		Commands:              []*cli.Command{},
+		EnableShellCompletion: true,
 	}
 
 	addCmd := &cli.Command{
