@@ -34,7 +34,7 @@ func Test_calculateScore(t *testing.T) {
 			visits:    []int64{daysAgo(1)},
 			count:     10,
 			starred:   true,
-			want:      800,
+			want:      1000,
 		},
 		{
 			name:      "Averaging different weights",

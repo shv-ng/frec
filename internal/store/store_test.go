@@ -45,7 +45,14 @@ func Test_listNameSpace(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := New(tt.dir)
+			s, err := New(tt.dir)
+
+			if err != nil {
+				if !tt.wantErr {
+					t.Fatalf("failed to create store: %v", err)
+				}
+				return
+			}
 			got, gotErr := s.ListNs()
 
 			if (gotErr != nil) != tt.wantErr {
