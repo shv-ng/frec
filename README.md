@@ -68,14 +68,6 @@ find ~/projects -maxdepth 1 -type d -print0 | frec sync --null projects
 
 Stored in `$XDG_DATA_HOME/frec` (default: `~/.local/share/frec`), one `.tsv` file per namespace.
 
-
-## Todo
-
-- [ ] Stats command (visit history, score breakdown per item)
-- [ ] Reset command (clear visits / reset score for an item)
-- [ ] JSON output (`--json` flag on list)
-- [ ] Config file support (default format, score weights, etc.)
-
 ---
 
 If frec is useful to you, consider giving it a ⭐ — it helps others find it.
