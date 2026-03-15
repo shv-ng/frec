@@ -10,13 +10,26 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+var Version string = "dev"
+
 func main() {
 	app := &cli.Command{
 		Name:                  "frec",
 		Usage:                 "track items by frequency and recency",
 		Commands:              []*cli.Command{},
 		EnableShellCompletion: true,
+		Version:               Version,
 	}
+
+	versionCmd := &cli.Command{
+		Name:  "version",
+		Usage: "see version",
+		Action: func(ctx context.Context, c *cli.Command) error {
+			fmt.Printf("%s version %s\n", app.Name, app.Version)
+			return nil
+		},
+	}
+	app.Commands = append(app.Commands, versionCmd)
 
 	addCmd := &cli.Command{
 		Name:      "add",

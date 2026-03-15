@@ -15,6 +15,7 @@ builds:
       - linux
       - windows
       - darwin
+    ldflags: "-X main.Version={{.Version }}"
 
 archives:
   - formats: [tar.gz]
