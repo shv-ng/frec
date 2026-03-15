@@ -4,6 +4,8 @@ Frecency-based item tracker — ranks items by how often and how recently you us
 
 Built to power pickers and menus that should reorder based on actual usage, like a tmux sessionizer.
 
+![Demo](./frec-demo.gif)
+
 ## Install
 
 **With Go:**
