@@ -51,7 +51,7 @@ func ListItems(ns, format string, limit, since int, starred bool) error {
 	if limit != -1 && limit < len(scoredItems) {
 		scoredItems = scoredItems[:limit]
 	}
-	printItem(scoredItems, format)
+	printItem(scoredItems, unsanetizeFormat(format))
 	return nil
 }
 
@@ -64,9 +64,16 @@ func ListNs(format string) error {
 	if err != nil {
 		return err
 	}
-	printNs(ns, format)
+	printNs(ns, unsanetizeFormat(format))
 	return nil
 }
+
+func unsanetizeFormat(format string) string {
+	format = strings.ReplaceAll(format, "\\n", "\n")
+	format = strings.ReplaceAll(format, "\\t", "\t")
+	return format
+}
+
 func printItem(items []scoredItem, format string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
 	defer w.Flush()
@@ -82,15 +89,13 @@ func printItem(items []scoredItem, format string) {
 		out = strings.ReplaceAll(out, "${firstseen}", fmt.Sprintf("%d", score.DaysSince(si.item.FirstSeen)))
 		out = strings.ReplaceAll(out, "${lastseen}", fmt.Sprintf("%d", score.DaysSince(si.item.LastSeen)))
 
-		fmt.Fprintf(w, out)
+		fmt.Fprint(w, out)
 	}
 }
 
 func printNs(val []string, format string) {
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
-	defer w.Flush()
 	for _, v := range val {
 		out := strings.ReplaceAll(format, "${ns}", v)
-		fmt.Fprintf(w, out)
+		fmt.Print(out)
 	}
 }
